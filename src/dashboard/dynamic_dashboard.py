@@ -21,8 +21,17 @@ def load_dashboard_data(region, industry):
     try:
         if industry.lower() == "all":
             # Load both transport and warehouse data and combine them
-            transport_file = f"data/processed/{region.lower()}_transport.parquet"
-            warehouse_file = f"data/processed/{region.lower()}_warehouse.parquet"
+            # Use sample data for Kanto region to reduce memory usage
+            if region.lower() == "kanto":
+                transport_file = (
+                    f"data/processed/sample_{region.lower()}_transport.parquet"
+                )
+                warehouse_file = (
+                    f"data/processed/sample_{region.lower()}_warehouse.parquet"
+                )
+            else:
+                transport_file = f"data/processed/{region.lower()}_transport.parquet"
+                warehouse_file = f"data/processed/{region.lower()}_warehouse.parquet"
 
             transport_df = pd.read_parquet(transport_file)
             warehouse_df = pd.read_parquet(warehouse_file)
@@ -35,7 +44,15 @@ def load_dashboard_data(region, industry):
             combined_df = pd.concat([transport_df, warehouse_df], ignore_index=True)
             return combined_df
         else:
-            file_path = f"data/processed/{region.lower()}_{industry.lower()}.parquet"
+            # Use sample data for Kanto region to reduce memory usage
+            if region.lower() == "kanto":
+                file_path = (
+                    f"data/processed/sample_{region.lower()}_{industry.lower()}.parquet"
+                )
+            else:
+                file_path = (
+                    f"data/processed/{region.lower()}_{industry.lower()}.parquet"
+                )
             df = pd.read_parquet(file_path)
             return df
     except Exception as e:

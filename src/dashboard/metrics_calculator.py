@@ -20,8 +20,17 @@ def calculate_dashboard_metrics(region, industry):
         # Load the appropriate dataset
         if industry.lower() == "all":
             # Load both transport and warehouse data and combine them
-            transport_file = f"data/processed/{region.lower()}_transport.parquet"
-            warehouse_file = f"data/processed/{region.lower()}_warehouse.parquet"
+            # Use sample data for Kanto region to reduce memory usage
+            if region.lower() == "kanto":
+                transport_file = (
+                    f"data/processed/sample_{region.lower()}_transport.parquet"
+                )
+                warehouse_file = (
+                    f"data/processed/sample_{region.lower()}_warehouse.parquet"
+                )
+            else:
+                transport_file = f"data/processed/{region.lower()}_transport.parquet"
+                warehouse_file = f"data/processed/{region.lower()}_warehouse.parquet"
 
             transport_df = pd.read_parquet(transport_file)
             warehouse_df = pd.read_parquet(warehouse_file)
@@ -33,7 +42,15 @@ def calculate_dashboard_metrics(region, industry):
             # Combine the dataframes
             df = pd.concat([transport_df, warehouse_df], ignore_index=True)
         else:
-            file_path = f"data/processed/{region.lower()}_{industry.lower()}.parquet"
+            # Use sample data for Kanto region to reduce memory usage
+            if region.lower() == "kanto":
+                file_path = (
+                    f"data/processed/sample_{region.lower()}_{industry.lower()}.parquet"
+                )
+            else:
+                file_path = (
+                    f"data/processed/{region.lower()}_{industry.lower()}.parquet"
+                )
             df = pd.read_parquet(file_path)
 
         # Calculate metrics
