@@ -6,6 +6,9 @@ An interactive Energy Management System dashboard built with Streamlit for analy
 
 All data used in this dashboard was downloaded for research purposes from the [EMS Open Data Japan](https://www.ems-opendata.jp/) platform, operated by the Sustainable open Innovation Initiative (SII). This platform provides open access to energy management system data for academic and research purposes.
 
+### Live Application
+ **The dashboard is live at: [https://bt9uzzr6a7mtgpx82prnrt.streamlit.app/](https://bt9uzzr6a7mtgpx82prnrt.streamlit.app/)**
+
 ## Features
 
 - **Interactive Map**: Visual representation of Japan with highlighted Kansai and Kanto regions
@@ -67,31 +70,28 @@ ems_opensource/
 ├── src/                             # Source code
 │   ├── dashboard/                   # Dashboard components
 │   │   ├── dynamic_dashboard.py     # Main dashboard logic (400 lines)
-│   │   ├── landing_page.py          # Landing page + navigation + overview (262 lines)
-│   │   ├── metrics_calculator.py   # Metrics calculations (95 lines)
+│   │   ├── landing_page.py          # Landing page + navigation + overview (265 lines)
+│   │   ├── metrics_calculator.py   # Metrics calculations (113 lines)
 │   │   └── sidebar.py              # Sidebar filters & charts (330 lines)
 │   ├── data/                        # Data utilities
 │   │   └── data_loader.py          # Data loading and caching (134 lines)
 │   └── utils/                       # Utilities and constants
 │       └── constants.py             # Color palettes and configuration (32 lines)
 └── data/                            # Data files
-    ├── kansai_transport/            # Raw Kansai transport data
-    ├── kansai_warehouse/            # Raw Kansai warehouse data
-    ├── kanto_transport/             # Raw Kanto transport data
-    ├── kanto_warehouse/             # Raw Kanto warehouse data
-    └── processed/                   # Processed parquet files
-        ├── kansai_transport.parquet
+    └── processed/                   # Processed parquet files 
+        ├── kansai_transport.parquet 
         ├── kansai_warehouse.parquet
         ├── kanto_transport.parquet
         ├── kanto_warehouse.parquet
-        └── temperature_*.parquet    # Historical temperature data
+        ├── temperature_kansai.parquet  
+        └── temperature_kanto.parquet   
 ```
 
 ## Dashboard Features
 
 ### Landing Page
 - Interactive map of Japan highlighting regions
-- Overview metrics cards for all region/industry combinations
+- Overview metrics cards for all 6 region/industry combinations
 - Data distribution charts and summary statistics
 
 ### Dynamic Dashboard
@@ -126,13 +126,21 @@ ems_opensource/
 - **Visualizations**: Plotly for interactive charts
 - **Data Storage**: Parquet files for efficient data access
 - **Modular Design**: Clean separation of concerns with focused modules
+- **Optimized Data**: Only essential files included (100% usage efficiency)
+
+## Data Overview
+
+### Energy Data (4 files, 63.6MB)
+- **Kansai Transport**: 3.3MB
+- **Kansai Warehouse**: 4.3MB
+- **Kanto Transport**: 30MB
+- **Kanto Warehouse**: 26MB
+
+### Temperature Data (2 files, 10KB)
+- **Kansai Temperature**: 5KB
+- **Kanto Temperature**: 5KB
 
 ## Deployment
-
-### Streamlit Cloud
-1. Push your code to GitHub
-2. Connect your repository to Streamlit Cloud
-3. Deploy with the main file as `main.py`
 
 ### Local Development
 ```bash
