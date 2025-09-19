@@ -1,4 +1,4 @@
-# EMS Open Source Dashboard
+# EMS Energy Consumption Dashboard
 
 An interactive Energy Management System dashboard built with Streamlit for analyzing energy consumption data across Kansai and Kanto regions in Japan.
 
@@ -9,22 +9,24 @@ All data used in this dashboard was downloaded for research purposes from the [E
 ## Features
 
 - **Interactive Map**: Visual representation of Japan with highlighted Kansai and Kanto regions
-- **Regional Analysis**: Separate dashboards for Transport and Warehouse facilities
+- **Regional Analysis**: Separate dashboards for Transport, Warehouse, or combined All industries
 - **Comprehensive Visualizations**: 
-  - Time series analysis
-  - Building characteristics
-  - Energy consumption breakdown
+  - Energy breakdown analysis
+  - Time series analysis with temperature correlation
+  - Building characteristics analysis
   - Load signature analysis
-- **Interactive Filtering**: Date range and building type filters
+- **Interactive Filtering**: Date range, building type, and time aggregation filters
 - **Real-time Data**: Live data loading with caching for performance
+- **Professional UI**: Clean, modern interface with standardized color palette
 
 ## Data Structure
 
 The dashboard analyzes energy consumption data including:
 - **Energy Components**: AC, Lighting, Power, Lamp, Refrigeration, Other
 - **Building Characteristics**: Floor area, contract power, building types
-- **Temporal Analysis**: Hourly, daily, weekly patterns
+- **Temporal Analysis**: Daily, weekly, monthly patterns
 - **Load Signatures**: Clustering and classification of consumption patterns
+- **Temperature Data**: Historical weather correlation for energy analysis
 
 ## Installation & Setup
 
@@ -59,22 +61,51 @@ The application will be available at `http://localhost:8501`
 
 ```
 ems_opensource/
-├── main.py                          # Main Streamlit application
+├── main.py                          # Main Streamlit application (51 lines)
 ├── pyproject.toml                   # Project dependencies
 ├── requirements.txt                 # Alternative requirements file
-├── pages_module/                    # Individual dashboard pages
-│   ├── kansai_transport.py         # Kansai transport analysis
-│   ├── kansai_warehouse.py         # Kansai warehouse analysis
-│   ├── kanto_transport.py          # Kanto transport analysis
-│   └── kanto_warehouse.py          # Kanto warehouse analysis
-├── preprocess_module/               # Data utilities
-│   └── data_loader.py              # Data loading and caching
-└── data/processed/                 # Processed parquet files
-    ├── kansai_transport.parquet
-    ├── kansai_warehouse.parquet
-    ├── kanto_transport.parquet
-    └── kanto_warehouse.parquet
+├── src/                             # Source code
+│   ├── dashboard/                   # Dashboard components
+│   │   ├── dynamic_dashboard.py     # Main dashboard logic (400 lines)
+│   │   ├── landing_page.py          # Landing page + navigation + overview (262 lines)
+│   │   ├── metrics_calculator.py   # Metrics calculations (95 lines)
+│   │   └── sidebar.py              # Sidebar filters & charts (330 lines)
+│   ├── data/                        # Data utilities
+│   │   └── data_loader.py          # Data loading and caching (134 lines)
+│   └── utils/                       # Utilities and constants
+│       └── constants.py             # Color palettes and configuration (32 lines)
+└── data/                            # Data files
+    ├── kansai_transport/            # Raw Kansai transport data
+    ├── kansai_warehouse/            # Raw Kansai warehouse data
+    ├── kanto_transport/             # Raw Kanto transport data
+    ├── kanto_warehouse/             # Raw Kanto warehouse data
+    └── processed/                   # Processed parquet files
+        ├── kansai_transport.parquet
+        ├── kansai_warehouse.parquet
+        ├── kanto_transport.parquet
+        ├── kanto_warehouse.parquet
+        └── temperature_*.parquet    # Historical temperature data
 ```
+
+## Dashboard Features
+
+### Landing Page
+- Interactive map of Japan highlighting regions
+- Overview metrics cards for all region/industry combinations
+- Data distribution charts and summary statistics
+
+### Dynamic Dashboard
+- **Energy Breakdown**: Component analysis, efficiency trends, peak/off-peak comparison
+- **Time Series**: Energy consumption vs temperature correlation, hourly patterns
+- **Building Analysis**: Contract power distribution, building characteristics
+- **Load Signatures**: Signature distribution and clustering analysis
+
+### Interactive Filters
+- Date range selection (start/end dates)
+- Building type filtering (All, Single Building, Tenant)
+- Time aggregation (Daily, Weekly, Monthly)
+- Industry selection (Transport, Warehouse, All)
+- Real-time data updates
 
 ## Regional Coverage
 
@@ -88,18 +119,13 @@ ems_opensource/
 - **Focus**: Metropolitan and industrial centers
 - **Data**: Transport and warehouse energy consumption
 
-## Dashboard Pages
+## Technical Architecture
 
-1. **Home Page**: Regional overview with interactive map
-2. **Transport Dashboards**: Detailed analysis of transport facility energy consumption
-3. **Warehouse Dashboards**: Comprehensive warehouse energy analysis
-
-Each dashboard includes:
-- Key performance metrics
-- Interactive time series charts
-- Building characteristic analysis
-- Energy component breakdown
-- Load signature clustering
+- **Frontend**: Streamlit with custom CSS styling
+- **Data Processing**: Pandas for data manipulation
+- **Visualizations**: Plotly for interactive charts
+- **Data Storage**: Parquet files for efficient data access
+- **Modular Design**: Clean separation of concerns with focused modules
 
 ## Deployment
 
@@ -108,8 +134,11 @@ Each dashboard includes:
 2. Connect your repository to Streamlit Cloud
 3. Deploy with the main file as `main.py`
 
-### GitHub Pages (Static)
-For static deployment, consider using Streamlit's static export feature or converting to a static site generator.
+### Local Development
+```bash
+# Run in development mode
+streamlit run main.py --server.port 8502 --server.headless true
+```
 
 ## License
 
