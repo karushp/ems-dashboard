@@ -1,5 +1,9 @@
 [server]
 fileWatcherType = "none"
+maxUploadSize = 10
 
 [logger]
 level = "error"
+
+[browser]
+gatherUsageStats = false

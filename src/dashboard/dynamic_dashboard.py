@@ -21,13 +21,13 @@ def load_dashboard_data(region, industry):
     try:
         if industry.lower() == "all":
             # Load both transport and warehouse data and combine them
-            # Use sample data for Kanto region to reduce memory usage
+            # Use tiny sample data for Kanto region to reduce memory usage
             if region.lower() == "kanto":
                 transport_file = (
-                    f"data/processed/sample_{region.lower()}_transport.parquet"
+                    f"data/processed/tiny_{region.lower()}_transport.parquet"
                 )
                 warehouse_file = (
-                    f"data/processed/sample_{region.lower()}_warehouse.parquet"
+                    f"data/processed/tiny_{region.lower()}_warehouse.parquet"
                 )
             else:
                 transport_file = f"data/processed/{region.lower()}_transport.parquet"
@@ -44,10 +44,10 @@ def load_dashboard_data(region, industry):
             combined_df = pd.concat([transport_df, warehouse_df], ignore_index=True)
             return combined_df
         else:
-            # Use sample data for Kanto region to reduce memory usage
+            # Use tiny sample data for Kanto region to reduce memory usage
             if region.lower() == "kanto":
                 file_path = (
-                    f"data/processed/sample_{region.lower()}_{industry.lower()}.parquet"
+                    f"data/processed/tiny_{region.lower()}_{industry.lower()}.parquet"
                 )
             else:
                 file_path = (
