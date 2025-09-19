@@ -7,6 +7,9 @@ import sys
 
 import streamlit as st
 
+# Disable file watching to avoid inotify limit issues
+os.environ["STREAMLIT_SERVER_FILE_WATCHER_TYPE"] = "none"
+
 # Add src to path
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 
