@@ -8,49 +8,29 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from src.dashboard.metrics_calculator import get_all_dashboard_metrics
-from src.data.data_loader import load_parquet_data
+# Removed data loading imports for lazy loading
+# from src.dashboard.metrics_calculator import get_all_dashboard_metrics
+# from src.data.data_loader import load_parquet_data
 
 
 def create_japan_map_data():
-    """Create data for st.map showing Kansai and Kanto regions"""
+    """Create static data for st.map showing Kansai and Kanto regions"""
 
-    # Define region coordinates and data
+    # Static region coordinates - no data loading
     regions_data = {
         "Kansai": {
             "lat": 34.6937,
             "lon": 135.5023,
-            "transport_records": 0,
-            "warehouse_records": 0,
+            "transport_records": "Available",
+            "warehouse_records": "Available",
         },
         "Kanto": {
             "lat": 35.6762,
             "lon": 139.6503,
-            "transport_records": 0,
-            "warehouse_records": 0,
+            "transport_records": "Available",
+            "warehouse_records": "Available",
         },
     }
-
-    # Load actual data counts
-    for region_name in regions_data:
-        transport_file = f"data/processed/{region_name.lower()}_transport.parquet"
-        warehouse_file = f"data/processed/{region_name.lower()}_warehouse.parquet"
-
-        if os.path.exists(transport_file):
-            try:
-                transport_df = load_parquet_data(transport_file)
-                if transport_df is not None:
-                    regions_data[region_name]["transport_records"] = len(transport_df)
-            except:
-                pass
-
-        if os.path.exists(warehouse_file):
-            try:
-                warehouse_df = load_parquet_data(warehouse_file)
-                if warehouse_df is not None:
-                    regions_data[region_name]["warehouse_records"] = len(warehouse_df)
-            except:
-                pass
 
     # Create DataFrame for st.map
     map_data = []
@@ -210,48 +190,6 @@ def show_landing_page():
     st.map(map_data, zoom=5)
 
     st.markdown("---")
-
-    # Dashboard overview with metrics cards and visualizations
-    st.subheader("Dashboard Overview")
-    st.markdown(
-        "Select a region and industry from the sidebar to explore detailed analytics, or view the overview below:"
-    )
-
-    # Get metrics for all dashboards - DISABLED FOR MEMORY OPTIMIZATION
-    # try:
-    #     all_metrics = get_all_dashboard_metrics()
-
-    #     # Create 6 metric cards in a 3x2 grid
-    #     # First row
-    #     col1, col2, col3 = st.columns(3)
-    #     with col1:
-    #         st.markdown(create_metric_card(all_metrics[0]), unsafe_allow_html=True)
-    #     with col2:
-    #         st.markdown(create_metric_card(all_metrics[1]), unsafe_allow_html=True)
-    #     with col3:
-    #         st.markdown(create_metric_card(all_metrics[2]), unsafe_allow_html=True)
-
-    #     # Second row
-    #     col4, col5, col6 = st.columns(3)
-    #     with col4:
-    #         st.markdown(create_metric_card(all_metrics[3]), unsafe_allow_html=True)
-    #     with col5:
-    #         st.markdown(create_metric_card(all_metrics[4]), unsafe_allow_html=True)
-    #     with col6:
-    #         st.markdown(create_metric_card(all_metrics[5]), unsafe_allow_html=True)
-
-    #     # Add visualizations below the cards
-    #     st.markdown("---")
-    #     st.subheader("Data Distribution Overview")
-
-    #     # Create charts showing data distribution
-    #     create_overview_charts(all_metrics)
-
-    # except Exception as e:
-    #     st.error(f"Error loading dashboard metrics: {str(e)}")
-    #     st.info(
-    #         "Please ensure all data files are available in the data/processed/ directory"
-    #     )
 
     # Footer attribution
     st.markdown("---")
