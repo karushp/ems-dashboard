@@ -217,41 +217,41 @@ def show_landing_page():
         "Select a region and industry from the sidebar to explore detailed analytics, or view the overview below:"
     )
 
-    # Get metrics for all dashboards
-    try:
-        all_metrics = get_all_dashboard_metrics()
+    # Get metrics for all dashboards - DISABLED FOR MEMORY OPTIMIZATION
+    # try:
+    #     all_metrics = get_all_dashboard_metrics()
 
-        # Create 6 metric cards in a 3x2 grid
-        # First row
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.markdown(create_metric_card(all_metrics[0]), unsafe_allow_html=True)
-        with col2:
-            st.markdown(create_metric_card(all_metrics[1]), unsafe_allow_html=True)
-        with col3:
-            st.markdown(create_metric_card(all_metrics[2]), unsafe_allow_html=True)
+    #     # Create 6 metric cards in a 3x2 grid
+    #     # First row
+    #     col1, col2, col3 = st.columns(3)
+    #     with col1:
+    #         st.markdown(create_metric_card(all_metrics[0]), unsafe_allow_html=True)
+    #     with col2:
+    #         st.markdown(create_metric_card(all_metrics[1]), unsafe_allow_html=True)
+    #     with col3:
+    #         st.markdown(create_metric_card(all_metrics[2]), unsafe_allow_html=True)
 
-        # Second row
-        col4, col5, col6 = st.columns(3)
-        with col4:
-            st.markdown(create_metric_card(all_metrics[3]), unsafe_allow_html=True)
-        with col5:
-            st.markdown(create_metric_card(all_metrics[4]), unsafe_allow_html=True)
-        with col6:
-            st.markdown(create_metric_card(all_metrics[5]), unsafe_allow_html=True)
+    #     # Second row
+    #     col4, col5, col6 = st.columns(3)
+    #     with col4:
+    #         st.markdown(create_metric_card(all_metrics[3]), unsafe_allow_html=True)
+    #     with col5:
+    #         st.markdown(create_metric_card(all_metrics[4]), unsafe_allow_html=True)
+    #     with col6:
+    #         st.markdown(create_metric_card(all_metrics[5]), unsafe_allow_html=True)
 
-        # Add visualizations below the cards
-        st.markdown("---")
-        st.subheader("Data Distribution Overview")
+    #     # Add visualizations below the cards
+    #     st.markdown("---")
+    #     st.subheader("Data Distribution Overview")
 
-        # Create charts showing data distribution
-        create_overview_charts(all_metrics)
+    #     # Create charts showing data distribution
+    #     create_overview_charts(all_metrics)
 
-    except Exception as e:
-        st.error(f"Error loading dashboard metrics: {str(e)}")
-        st.info(
-            "Please ensure all data files are available in the data/processed/ directory"
-        )
+    # except Exception as e:
+    #     st.error(f"Error loading dashboard metrics: {str(e)}")
+    #     st.info(
+    #         "Please ensure all data files are available in the data/processed/ directory"
+    #     )
 
     # Footer attribution
     st.markdown("---")
